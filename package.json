@@ -4,14 +4,15 @@
     "tailwindcss": "^4.1.14"
   },
   "scripts": {
-    "watch": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./css/style.css --watch",
-    "build": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./css/style.css"
+    "watch": "tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --watch",
+    "build": "tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --minify",
+    "heroku-postbuild": "yarn build"
   },
   "dependencies": {
     "@tailwindplus/elements": "^1.0.15"
   },
   "engines": {
     "node": "20.9.0",
-    "yarn": "1.22.19"
+    "yarn": "1.22.x"
   }
 }
