@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "install": "^0.13.0",
+    "tailwindcss": "^4.1.14"
+  },
+   "scripts": {
+    "watch": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./css/style.css --watch",
+    "build": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./css/style.css"
+  }
+}
