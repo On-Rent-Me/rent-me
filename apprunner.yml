@@ -1,9 +1,11 @@
 version: 1.0
-runtime: python3
+runtime: docker
 build:
-  commands:
-    build:
-      - pip install pipenv
-      - pipenv install
+  dockerfile: Dockerfile
 run:
-  command: python app.py
+  runtime-version: 3.2.8
+  env:
+    - name: RAILS_ENV
+      value: production
+    - name: PORT
+      value: "80"
