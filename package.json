@@ -1,12 +1,13 @@
 {
   "scripts": {
-    "watch": "npx tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --watch",
-    "build": "npx tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --minify",
+    "watch": "npx @tailwindcss/cli -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --watch",
+    "build": "npx @tailwindcss/cli -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --minify",
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@tailwindplus/elements": "^1.0.15",
-    "tailwindcss": "^4.1.14"
+    "tailwindcss": "^4.1.14",
+    "@tailwindcss/cli": "^4.0.0-alpha.36"
   },
   "engines": {
     "node": "20.9.0",
