@@ -31,26 +31,5 @@ test:
   database: rent_me_test
 
 production:
-  primary:
-    <<: *default
-    database: rent_me_production
-    username: <%= ENV.fetch("POSTGRES_USER") { "rent_me" } %>
-    password: <%= ENV["POSTGRES_PASSWORD"] %>
-  cache:
-    <<: *default
-    database: rent_me_production_cache
-    username: <%= ENV.fetch("POSTGRES_USER") { "rent_me" } %>
-    password: <%= ENV["POSTGRES_PASSWORD"] %>
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *default
-    database: rent_me_production_queue
-    username: <%= ENV.fetch("POSTGRES_USER") { "rent_me" } %>
-    password: <%= ENV["POSTGRES_PASSWORD"] %>
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *default
-    database: rent_me_production_cable
-    username: <%= ENV.fetch("POSTGRES_USER") { "rent_me" } %>
-    password: <%= ENV["POSTGRES_PASSWORD"] %>
-    migrations_paths: db/cable_migrate
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
