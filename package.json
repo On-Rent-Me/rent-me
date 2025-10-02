@@ -1,15 +1,12 @@
 {
-  "devDependencies": {
-    "install": "^0.13.0",
-    "tailwindcss": "^4.1.14"
-  },
   "scripts": {
     "watch": "tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --watch",
     "build": "tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --minify",
     "heroku-postbuild": "yarn build"
   },
   "dependencies": {
-    "@tailwindplus/elements": "^1.0.15"
+    "@tailwindplus/elements": "^1.0.15",
+    "tailwindcss": "^4.1.14"
   },
   "engines": {
     "node": "20.9.0",
