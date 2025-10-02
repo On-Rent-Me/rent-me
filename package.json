@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "watch": "tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --watch",
-    "build": "tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --minify",
-    "heroku-postbuild": "yarn build"
+    "watch": "npx tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --watch",
+    "build": "npx tailwindcss -i ./app/assets/stylesheets/tailwind/application.css -o ./app/assets/builds/tailwind.css --minify",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@tailwindplus/elements": "^1.0.15",
