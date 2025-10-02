@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@tailwindplus/elements@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@tailwindplus/elements/-/elements-1.0.15.tgz#f5be1231e34a106375f18a2d538fdf1c58b49281"
+  integrity sha512-fFpo4G+HOqDm94pOPxXZi3V6I360FzXXvOUtx2QABKAqKKSWrzSwQfLBaFmNo7k1IGzTG+mygCWDkZm6GreBlg==
+
 install@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/install/-/install-0.13.0.tgz#6af6e9da9dd0987de2ab420f78e60d9c17260776"

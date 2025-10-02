@@ -3,8 +3,11 @@
     "install": "^0.13.0",
     "tailwindcss": "^4.1.14"
   },
-   "scripts": {
+  "scripts": {
     "watch": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./css/style.css --watch",
     "build": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./css/style.css"
+  },
+  "dependencies": {
+    "@tailwindplus/elements": "^1.0.15"
   }
 }
