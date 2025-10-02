@@ -1,8 +1,19 @@
 version: 1.0
-runtime: ruby32
+runtime: docker
+
 build:
-  commands:
-    build:
-      - bundle install
+  dockerfile: Dockerfile
+  context: .
+
 run:
-  command: bundle exec rackup --host 0.0.0.0 -p 8080
+  runtime-version: 3.5-rc-bookworm⁠
+  command: ./bin/thrust ./bin/rails server
+  network:
+    port: 80
+  env:
+    - name: RAILS_ENV
+      value: production
+    - name: RAILS_LOG_TO_STDOUT
+      value: "true"
+    - name: RAILS_SERVE_STATIC_FILES
+      value: "true"
