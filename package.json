@@ -9,5 +9,9 @@
   },
   "dependencies": {
     "@tailwindplus/elements": "^1.0.15"
+  },
+  "engines": {
+    "node": "20.9.0",
+    "yarn": "1.22.19"
   }
 }
