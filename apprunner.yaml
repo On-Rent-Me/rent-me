@@ -4,5 +4,8 @@ build:
   commands:
     build:
       - bundle install
+  env:
+    - name: RAILS_MASTER_KEY
+      value: "40d90d1748cd5a26bc517d88ea91cfec"
 run:
   command: bundle exec rackup --host 0.0.0.0 -p 8080
