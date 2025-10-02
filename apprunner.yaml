@@ -1,11 +1,21 @@
 version: 1.0
-runtime: ruby31
+runtime: docker
+
 build:
-  commands:
-    build:
-      - bundle install
+  dockerfile: Dockerfile
+  context: .
+
+run:
+  runtime-version: 3.2.8
+  command: ./bin/thrust ./bin/rails server
+  network:
+    port: 80
   env:
+    - name: RAILS_ENV
+      value: production
+    - name: RAILS_LOG_TO_STDOUT
+      value: "true"
+    - name: RAILS_SERVE_STATIC_FILES
+      value: "true"
     - name: RAILS_MASTER_KEY
       value: "40d90d1748cd5a26bc517d88ea91cfec"
-run:
-  command: bundle exec rackup --host 0.0.0.0 -p 8080
