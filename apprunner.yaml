@@ -1,11 +1,8 @@
 version: 1.0
-runtime: docker
+runtime: ruby31
 build:
-  dockerfile: Dockerfile
+  commands:
+    build:
+      - bundle install
 run:
-  runtime-version: 3.2.8
-  env:
-    - name: RAILS_ENV
-      value: production
-    - name: PORT
-      value: "80"
+  command: bundle exec rackup --host 0.0.0.0 -p 8080
