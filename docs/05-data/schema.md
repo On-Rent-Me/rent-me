@@ -1,110 +1,18 @@
-# This file is auto-generated from the current state of the database. Instead
-# of editing this file, please use the migrations feature of Active Record to
-# incrementally modify your database, and then regenerate this schema definition.
+# This file is auto-generated from the Entity Framework schema.
+# It represents the RentMe database structure converted to Rails conventions.
 #
-# This file is the source Rails uses to define your schema when running `bin/rails
-# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
-# be faster and is potentially less error prone than running all of your
-# migrations from scratch. Old migrations may fail to apply correctly if those
-# migrations use external dependencies or application code.
-#
-# It's strongly recommended that you check this file into your version control system.
+# Note: This is a conversion from ASP.NET Identity and EF Core schema.
+# Some enum types are represented as integers (Rails convention).
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_catalog.plpgsql"
+ActiveRecord::Schema.define(version: 2024_01_01_000000) do
+
+  # Enable UUID extension for PostgreSQL
+  enable_extension "plpgsql"
   enable_extension "pgcrypto"
 
-  create_table "account_document_requests", force: :cascade do |t|
-    t.string "UserId", null: false
-    t.integer "CompanyId", null: false
-    t.integer "DocumentType", null: false
-    t.integer "DocumentSpecificType", null: false
-    t.boolean "isUploaded", default: false, null: false
-    t.integer "DocumentId"
-    t.datetime "DateRequested", null: false
-    t.datetime "DateUploaded"
-    t.string "RequestDetail"
-    t.string "RequestedById"
-    t.boolean "IsDeleted", default: false, null: false
-    t.index ["CompanyId"], name: "index_account_document_requests_on_company_id"
-    t.index ["DocumentId"], name: "index_account_document_requests_on_document_id"
-    t.index ["RequestedById"], name: "index_account_document_requests_on_requested_by_id"
-    t.index ["UserId"], name: "index_account_document_requests_on_user_id"
-  end
+  # ASP.NET Identity Tables (converted to Rails naming)
 
-  create_table "account_documents", force: :cascade do |t|
-    t.string "UserId", null: false
-    t.integer "DocumentType", null: false
-    t.integer "DocumentSpecificType", null: false
-    t.integer "DocumentSide", null: false
-    t.string "Name"
-    t.datetime "Created", null: false
-    t.datetime "Modified", null: false
-    t.string "Url"
-    t.integer "StorageLocation", null: false
-    t.integer "Rotation", default: 0, null: false
-    t.integer "Version", default: 0, null: false
-    t.boolean "IsDeleted", default: false, null: false
-    t.index ["UserId"], name: "index_account_documents_on_user_id"
-  end
-
-  create_table "account_verification_histories", force: :cascade do |t|
-    t.string "UserId", null: false
-    t.integer "AccountVerificationMethod", null: false
-    t.integer "AccountApprovalStatus", null: false
-    t.datetime "DateCreated", null: false
-    t.string "EntryCreatedByUserId"
-    t.text "Note"
-    t.boolean "IsDeleted", default: false, null: false
-    t.index ["EntryCreatedByUserId"], name: "index_account_verification_histories_on_entry_created_by"
-    t.index ["UserId"], name: "index_account_verification_histories_on_user_id"
-  end
-
-  create_table "application_group_members", force: :cascade do |t|
-    t.integer "ApplicationGroupId", null: false
-    t.string "FirstName"
-    t.string "LastName"
-    t.string "Relation"
-    t.integer "Age", null: false
-    t.string "Occupation"
-    t.string "Email"
-    t.string "UserId"
-    t.integer "ApplicationId"
-    t.boolean "AcceptedInvitation", default: false, null: false
-    t.datetime "DateAcceptedInvitation"
-    t.integer "InvitationsSent", default: 0, null: false
-    t.datetime "TimeLastInvitationSent"
-    t.integer "PropertyBidAuthorizationId"
-    t.boolean "IsDeleted", default: false, null: false
-    t.index ["ApplicationGroupId"], name: "index_application_group_members_on_application_group_id"
-    t.index ["ApplicationId"], name: "index_application_group_members_on_application_id"
-    t.index ["PropertyBidAuthorizationId"], name: "index_application_group_members_on_pba_id"
-    t.index ["UserId"], name: "index_application_group_members_on_user_id"
-  end
-
-  create_table "application_groups", force: :cascade do |t|
-    t.integer "PropertyId", null: false
-    t.integer "LeasePeriodId", null: false
-    t.datetime "DateCreated", null: false
-    t.boolean "IsDeleted", default: false, null: false
-    t.index ["LeasePeriodId"], name: "index_application_groups_on_lease_period_id"
-    t.index ["PropertyId"], name: "index_application_groups_on_property_id"
-  end
-
-  create_table "application_reviews", primary_key: ["ApplicationId", "ReviewerCompanyId"], force: :cascade do |t|
-    t.integer "ApplicationId", null: false
-    t.string "ReviewerId"
-    t.integer "ReviewerCompanyId", null: false
-    t.datetime "ReviewDate"
-    t.integer "ApplicationReviewType", null: false
-    t.text "ApplicationReviewNotes"
-    t.boolean "IsDeleted", default: false, null: false
-    t.index ["ApplicationId"], name: "index_application_reviews_on_application_id"
-    t.index ["ReviewerId"], name: "index_application_reviews_on_reviewer_id"
-  end
-
-  create_table "asp_net_roles", primary_key: "Id", id: { type: :string, limit: 128 }, force: :cascade do |t|
+  create_table "asp_net_roles", primary_key: "Id", id: :string, limit: 128, force: :cascade do |t|
     t.string "Name", limit: 256
   end
 
@@ -129,7 +37,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.index ["UserId"], name: "index_asp_net_user_roles_on_user_id"
   end
 
-  create_table "asp_net_users", primary_key: "Id", id: { type: :string, limit: 128 }, force: :cascade do |t|
+  create_table "asp_net_users", primary_key: "Id", id: :string, limit: 128, force: :cascade do |t|
     t.string "Email", limit: 256
     t.boolean "EmailConfirmed", default: false, null: false
     t.string "PasswordHash"
@@ -141,6 +49,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.boolean "LockoutEnabled", default: false, null: false
     t.integer "AccessFailedCount", default: 0, null: false
     t.string "UserName", limit: 256, null: false
+
+    # Custom RentMe fields
     t.integer "UserType", null: false
     t.string "FirstName"
     t.string "LastName"
@@ -153,9 +63,107 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.integer "AccountApprovalStatus", null: false
     t.integer "LoginCounter", default: 0, null: false
     t.boolean "IsDisabled", default: false, null: false
-    t.index ["AnalyticsId"], name: "index_asp_net_users_on_analytics_id"
+
     t.index ["Email"], name: "index_asp_net_users_on_email"
     t.index ["UserName"], name: "index_asp_net_users_on_user_name", unique: true
+    t.index ["AnalyticsId"], name: "index_asp_net_users_on_analytics_id"
+  end
+
+  # Application Tables
+
+  create_table "account_document_requests", force: :cascade do |t|
+    t.string "UserId", null: false
+    t.integer "CompanyId", null: false
+    t.integer "DocumentType", null: false
+    t.integer "DocumentSpecificType", null: false
+    t.boolean "isUploaded", default: false, null: false
+    t.integer "DocumentId"
+    t.datetime "DateRequested", null: false
+    t.datetime "DateUploaded"
+    t.string "RequestDetail"
+    t.string "RequestedById"
+    t.boolean "IsDeleted", default: false, null: false
+
+    t.index ["UserId"], name: "index_account_document_requests_on_user_id"
+    t.index ["CompanyId"], name: "index_account_document_requests_on_company_id"
+    t.index ["DocumentId"], name: "index_account_document_requests_on_document_id"
+    t.index ["RequestedById"], name: "index_account_document_requests_on_requested_by_id"
+  end
+
+  create_table "account_documents", force: :cascade do |t|
+    t.string "UserId", null: false
+    t.integer "DocumentType", null: false
+    t.integer "DocumentSpecificType", null: false
+    t.integer "DocumentSide", null: false
+    t.string "Name"
+    t.datetime "Created", null: false
+    t.datetime "Modified", null: false
+    t.string "Url"
+    t.integer "StorageLocation", null: false
+    t.integer "Rotation", default: 0, null: false
+    t.integer "Version", default: 0, null: false
+    t.boolean "IsDeleted", default: false, null: false
+
+    t.index ["UserId"], name: "index_account_documents_on_user_id"
+  end
+
+  create_table "account_verification_histories", force: :cascade do |t|
+    t.string "UserId", null: false
+    t.integer "AccountVerificationMethod", null: false
+    t.integer "AccountApprovalStatus", null: false
+    t.datetime "DateCreated", null: false
+    t.string "EntryCreatedByUserId"
+    t.text "Note"
+    t.boolean "IsDeleted", default: false, null: false
+
+    t.index ["UserId"], name: "index_account_verification_histories_on_user_id"
+    t.index ["EntryCreatedByUserId"], name: "index_account_verification_histories_on_entry_created_by"
+  end
+
+  create_table "application_group_members", force: :cascade do |t|
+    t.integer "ApplicationGroupId", null: false
+    t.string "FirstName"
+    t.string "LastName"
+    t.string "Relation"
+    t.integer "Age", null: false
+    t.string "Occupation"
+    t.string "Email"
+    t.string "UserId"
+    t.integer "ApplicationId"
+    t.boolean "AcceptedInvitation", default: false, null: false
+    t.datetime "DateAcceptedInvitation"
+    t.integer "InvitationsSent", default: 0, null: false
+    t.datetime "TimeLastInvitationSent"
+    t.integer "PropertyBidAuthorizationId"
+    t.boolean "IsDeleted", default: false, null: false
+
+    t.index ["ApplicationGroupId"], name: "index_application_group_members_on_application_group_id"
+    t.index ["UserId"], name: "index_application_group_members_on_user_id"
+    t.index ["ApplicationId"], name: "index_application_group_members_on_application_id"
+    t.index ["PropertyBidAuthorizationId"], name: "index_application_group_members_on_pba_id"
+  end
+
+  create_table "application_groups", force: :cascade do |t|
+    t.integer "PropertyId", null: false
+    t.integer "LeasePeriodId", null: false
+    t.datetime "DateCreated", null: false
+    t.boolean "IsDeleted", default: false, null: false
+
+    t.index ["PropertyId"], name: "index_application_groups_on_property_id"
+    t.index ["LeasePeriodId"], name: "index_application_groups_on_lease_period_id"
+  end
+
+  create_table "application_reviews", primary_key: ["ApplicationId", "ReviewerCompanyId"], force: :cascade do |t|
+    t.integer "ApplicationId", null: false
+    t.string "ReviewerId"
+    t.integer "ReviewerCompanyId", null: false
+    t.datetime "ReviewDate"
+    t.integer "ApplicationReviewType", null: false
+    t.text "ApplicationReviewNotes"
+    t.boolean "IsDeleted", default: false, null: false
+
+    t.index ["ApplicationId"], name: "index_application_reviews_on_application_id"
+    t.index ["ReviewerId"], name: "index_application_reviews_on_reviewer_id"
   end
 
   create_table "auto_billing_payments", force: :cascade do |t|
@@ -175,8 +183,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "CreatedByUserId"
     t.datetime "DateDeleted"
     t.boolean "IsDeleted", default: false, null: false
-    t.index ["CreatedByUserId"], name: "index_auto_billing_payments_on_created_by_user_id"
+
     t.index ["LeasePeriodId"], name: "index_auto_billing_payments_on_lease_period_id"
+    t.index ["CreatedByUserId"], name: "index_auto_billing_payments_on_created_by_user_id"
   end
 
   create_table "auto_billings", force: :cascade do |t|
@@ -198,8 +207,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "IpCreatedFrom"
     t.string "LastModifiedById"
     t.boolean "IsDeleted", default: false, null: false
-    t.index ["LastModifiedById"], name: "index_auto_billings_on_last_modified_by_id"
+
     t.index ["LeasePeriodId"], name: "index_auto_billings_on_lease_period_id"
+    t.index ["LastModifiedById"], name: "index_auto_billings_on_last_modified_by_id"
   end
 
   create_table "bids", force: :cascade do |t|
@@ -214,9 +224,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.integer "LeasePeriodId"
     t.integer "PropertyBidAuthorizationId", null: false
     t.boolean "HideBid", default: false, null: false
+
+    t.index ["PropertyId"], name: "index_bids_on_property_id"
     t.index ["BidOwnerId"], name: "index_bids_on_bid_owner_id"
     t.index ["LeasePeriodId"], name: "index_bids_on_lease_period_id"
-    t.index ["PropertyId"], name: "index_bids_on_property_id"
   end
 
   create_table "billing_payment_histories", force: :cascade do |t|
@@ -236,11 +247,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.boolean "FundsAreScheduledOrSettled", default: false, null: false
     t.boolean "PaymentFailure", default: false, null: false
     t.integer "PaymentFailureReason"
+
     t.index ["BillingPaymentId"], name: "index_billing_payment_histories_on_billing_payment_id"
   end
 
-  create_table "billing_payment_nsf_charges", primary_key: "BillingPaymentThatNSFdId", id: :serial, force: :cascade do |t|
+  create_table "billing_payment_nsf_charges", primary_key: "BillingPaymentThatNSFdId", force: :cascade do |t|
     t.integer "BillingPaymentNSFChargeId", null: false
+
     t.index ["BillingPaymentNSFChargeId"], name: "index_billing_payment_nsf_charges_on_charge_id"
   end
 
@@ -275,17 +288,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.datetime "FailureDate"
     t.integer "NsfFeeStatus", default: 0, null: false
     t.datetime "NsfFeeStatusDate"
-    t.index ["AutoBillingPaymentId"], name: "index_billing_payments_on_auto_billing_payment_id"
+
+    t.index ["TransactionId"], name: "index_billing_payments_on_transaction_id", unique: true
     t.index ["LeasePeriodId"], name: "index_billing_payments_on_lease_period_id"
     t.index ["PaidByUserId"], name: "index_billing_payments_on_paid_by_user_id"
+    t.index ["AutoBillingPaymentId"], name: "index_billing_payments_on_auto_billing_payment_id"
     t.index ["SystemFeeForBillingPaymentId"], name: "index_billing_payments_on_system_fee_for_id"
-    t.index ["TransactionId"], name: "index_billing_payments_on_transaction_id", unique: true
   end
 
-  create_table "billing_references", primary_key: "ReferenceId", id: :serial, force: :cascade do |t|
+  create_table "billing_references", primary_key: "ReferenceId", force: :cascade do |t|
     t.integer "ParentBillingId", null: false
     t.integer "BillingReferenceType", null: false
     t.integer "ChildBillingId", null: false
+
     t.index ["ParentBillingId", "ChildBillingId"], name: "IX_ParentChildBilling", unique: true
   end
 
@@ -310,13 +325,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.boolean "IsLate", default: false, null: false
     t.decimal "FullCorrectedAmount", precision: 18, scale: 2
     t.boolean "IsDeleted", default: false, null: false
+
     t.index ["AutoBillingId"], name: "index_billings_on_auto_billing_id"
-    t.index ["LastModifiedById"], name: "index_billings_on_last_modified_by_id"
     t.index ["LeasePeriodId"], name: "index_billings_on_lease_period_id"
+    t.index ["LastModifiedById"], name: "index_billings_on_last_modified_by_id"
   end
 
   create_table "cc_payment_methods", force: :cascade do |t|
-    t.string "type", null: false
+    t.string "type", null: false  # STI discriminator
     t.string "CreatedByUserId"
     t.datetime "DateCreated", null: false
     t.datetime "DateUpdated", null: false
@@ -333,9 +349,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "BraintreePrimaryPaymentMethodId"
     t.text "StatusMessage"
     t.boolean "IsDeleted", default: false, null: false
-    t.integer "CompanyId"
-    t.index ["CompanyId"], name: "index_cc_payment_methods_on_company_id"
+    t.integer "CompanyId"  # For LandlordCCPaymentMethod
+
     t.index ["CreatedByUserId"], name: "index_cc_payment_methods_on_created_by_user_id"
+    t.index ["CompanyId"], name: "index_cc_payment_methods_on_company_id"
     t.index ["type"], name: "index_cc_payment_methods_on_type"
   end
 
@@ -350,6 +367,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "AccountName"
     t.boolean "IsRentMeCustomerAccount", default: false, null: false
     t.boolean "IsDeleted", default: false, null: false
+
     t.index ["UserId"], name: "index_customer_accounts_on_user_id"
   end
 
@@ -371,6 +389,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.integer "RentalApplicationId", null: false
     t.datetime "StartDate"
     t.datetime "EndDate"
+
     t.index ["RentalApplicationId"], name: "index_employment_records_on_rental_application_id"
   end
 
@@ -380,6 +399,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "ProofOfIncome"
     t.integer "IncomePeriod", null: false
     t.integer "RentalApplicationId", null: false
+
     t.index ["RentalApplicationId"], name: "index_incomes_on_rental_application_id"
   end
 
@@ -399,13 +419,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.decimal "SyndicationChargeFee", precision: 18, scale: 2
     t.boolean "IsDeleted", default: false, null: false
     t.integer "SaTuLandlordId"
+
     t.index ["CreatedByUserId"], name: "index_landlord_companies_on_created_by_user_id"
   end
 
-  create_table "landlord_company_permissions", primary_key: "UserId", id: { type: :string, limit: 128 }, force: :cascade do |t|
+  create_table "landlord_company_permissions", primary_key: "UserId", id: :string, limit: 128, force: :cascade do |t|
     t.integer "LandlordCompanyId", null: false
     t.integer "Permission", null: false
     t.boolean "IsDeleted", default: false, null: false
+
     t.index ["LandlordCompanyId"], name: "index_landlord_company_permissions_on_company_id"
   end
 
@@ -467,6 +489,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.text "Message"
     t.text "RawLeadPostData"
     t.boolean "IsDeleted", default: false, null: false
+
     t.index ["PropertyId"], name: "index_leads_on_property_id"
     t.index ["UserId"], name: "index_leads_on_user_id"
   end
@@ -485,6 +508,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.decimal "Rent", precision: 18, scale: 2, null: false
     t.boolean "IsDeleted", default: false, null: false
     t.boolean "IsRentersInsuranceRequired", default: false, null: false
+
     t.index ["PropertyId"], name: "index_lease_periods_on_property_id"
   end
 
@@ -505,10 +529,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "PhoneNumber"
     t.boolean "HasRentersInsurance", default: false, null: false
     t.integer "RentersInsuranceId"
+
     t.index ["LeasePeriodId"], name: "index_lease_tenants_on_lease_period_id"
+    t.index ["UserId"], name: "index_lease_tenants_on_user_id"
     t.index ["PropertyBidAuthorizationId"], name: "index_lease_tenants_on_pba_id"
     t.index ["RentersInsuranceId"], name: "index_lease_tenants_on_renters_insurance_id"
-    t.index ["UserId"], name: "index_lease_tenants_on_user_id"
   end
 
   create_table "maintenance_request_photos", force: :cascade do |t|
@@ -517,6 +542,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "Url"
     t.integer "StorageLocation", null: false
     t.integer "MaintenanceRequestId", null: false
+
     t.index ["MaintenanceRequestId"], name: "index_maintenance_request_photos_on_request_id"
   end
 
@@ -545,8 +571,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "TenantNameWhoResponded"
     t.datetime "TenantAvailableResponseDate"
     t.boolean "IsDeleted", default: false, null: false
-    t.index ["CreatedByUserId"], name: "index_maintenance_requests_on_created_by_user_id"
+
     t.index ["LeasePeriodId"], name: "index_maintenance_requests_on_lease_period_id"
+    t.index ["CreatedByUserId"], name: "index_maintenance_requests_on_created_by_user_id"
   end
 
   create_table "merchant_locations", force: :cascade do |t|
@@ -556,16 +583,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "LocationName"
     t.decimal "DefaultMerchantTransactionFee", precision: 18, scale: 2
     t.boolean "IsEnabled", default: true, null: false
-    t.index ["CompanyId"], name: "index_merchant_locations_on_company_id"
-  end
 
-  create_table "omni_auth_identities", force: :cascade do |t|
-    t.string "uid"
-    t.string "provider"
-    t.integer "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_omni_auth_identities_on_user_id"
+    t.index ["CompanyId"], name: "index_merchant_locations_on_company_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -587,8 +606,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "PaidByUserId"
     t.string "CreatedFromIp"
     t.text "UserAgentInfo"
-    t.index ["PaidByUserId"], name: "index_payments_on_paid_by_user_id"
+
     t.index ["RentalApplicationId"], name: "index_payments_on_rental_application_id"
+    t.index ["PaidByUserId"], name: "index_payments_on_paid_by_user_id"
   end
 
   create_table "personal_contact_of_renters", force: :cascade do |t|
@@ -607,6 +627,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.boolean "IsIndoorPet"
     t.integer "Age"
     t.integer "RentalApplicationId", null: false
+
     t.index ["RentalApplicationId"], name: "index_pets_on_rental_application_id"
   end
 
@@ -644,8 +665,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "Extension"
     t.integer "RentalApplicationId", null: false
     t.integer "PersonalContactOfRenterId"
-    t.index ["PersonalContactOfRenterId"], name: "index_phone_numbers_on_personal_contact_id"
+
     t.index ["RentalApplicationId"], name: "index_phone_numbers_on_rental_application_id"
+    t.index ["PersonalContactOfRenterId"], name: "index_phone_numbers_on_personal_contact_id"
   end
 
   create_table "properties", force: :cascade do |t|
@@ -694,11 +716,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.decimal "SystemTransactionFee", precision: 18, scale: 2
     t.boolean "IsRoomForRent", default: false, null: false
     t.string "LegalOwnerName"
+
     t.index ["CompanyId"], name: "index_properties_on_company_id"
-    t.index ["CurrentLeasePeriodId"], name: "index_properties_on_current_lease_period_id"
-    t.index ["MerchantLocationId"], name: "index_properties_on_merchant_location_id"
     t.index ["OwnerId"], name: "index_properties_on_owner_id"
+    t.index ["CurrentLeasePeriodId"], name: "index_properties_on_current_lease_period_id"
     t.index ["PropertyGroupId"], name: "index_properties_on_property_group_id"
+    t.index ["MerchantLocationId"], name: "index_properties_on_merchant_location_id"
   end
 
   create_table "property_bid_authorizations", force: :cascade do |t|
@@ -722,11 +745,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.integer "LeasePeriodId"
     t.integer "ApplicationGroupId"
     t.boolean "IsDeleted", default: false, null: false
-    t.index ["ApplicationGroupId"], name: "index_property_bid_authorizations_on_app_group_id"
-    t.index ["LeasePeriodId"], name: "index_property_bid_authorizations_on_lease_period_id"
-    t.index ["PrimaryApplicationId"], name: "index_property_bid_authorizations_on_primary_app_id"
-    t.index ["PrimaryRenterId"], name: "index_property_bid_authorizations_on_primary_renter_id"
+
     t.index ["PropertyId"], name: "index_property_bid_authorizations_on_property_id"
+    t.index ["PrimaryRenterId"], name: "index_property_bid_authorizations_on_primary_renter_id"
+    t.index ["PrimaryApplicationId"], name: "index_property_bid_authorizations_on_primary_app_id"
+    t.index ["LeasePeriodId"], name: "index_property_bid_authorizations_on_lease_period_id"
+    t.index ["ApplicationGroupId"], name: "index_property_bid_authorizations_on_app_group_id"
   end
 
   create_table "property_groups", force: :cascade do |t|
@@ -745,6 +769,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "Make"
     t.string "Model"
     t.text "Note"
+
     t.index ["PropertyNoteId"], name: "index_property_note_appliances_on_property_note_id"
   end
 
@@ -758,6 +783,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.decimal "PurchasePrice", precision: 18, scale: 2, default: "0.0", null: false
     t.datetime "DateCreated", null: false
     t.datetime "DateUpdated", null: false
+
     t.index ["PropertyId"], name: "index_property_notes_on_property_id"
   end
 
@@ -772,6 +798,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.integer "GalleryIndex", default: 0, null: false
     t.integer "Rotation", default: 0, null: false
     t.integer "Version", default: 0, null: false
+
     t.index ["PropertyId"], name: "index_property_photos_on_property_id"
   end
 
@@ -789,6 +816,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "TOSVersion"
     t.boolean "SubmittedToProcessor", default: false, null: false
     t.boolean "IsDeleted", default: false, null: false
+
     t.index ["SubmittedByUserId"], name: "index_ps_application_entities_on_submitted_by_user_id"
     t.index ["SubmittingUsersCompanyId"], name: "index_ps_application_entities_on_company_id"
   end
@@ -810,18 +838,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "PropertyAddress"
     t.integer "PropertyId"
     t.integer "LeasePeriodId"
+
     t.index ["BatchId"], name: "index_ps_batch_transactions_on_batch_id"
-    t.index ["LeasePeriodId"], name: "index_ps_batch_transactions_on_lease_period_id"
     t.index ["PropertyId"], name: "index_ps_batch_transactions_on_property_id"
+    t.index ["LeasePeriodId"], name: "index_ps_batch_transactions_on_lease_period_id"
   end
 
-  create_table "ps_batches", primary_key: "BatchId", force: :cascade do |t|
+  create_table "ps_batches", primary_key: "BatchId", id: :bigint, force: :cascade do |t|
     t.string "BatchStatus"
     t.datetime "EffectiveDate", null: false
     t.text "Description"
     t.decimal "Amount", precision: 18, scale: 2, null: false
     t.integer "EntityId", null: false
     t.integer "CompanyId"
+
     t.index ["CompanyId"], name: "index_ps_batches_on_company_id"
   end
 
@@ -839,6 +869,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.decimal "AmountOfRent", precision: 18, scale: 2
     t.boolean "RentPaymentUpToDate"
     t.integer "RentalApplicationId", null: false
+
     t.index ["RentalApplicationId"], name: "index_rental_addresses_on_rental_application_id"
   end
 
@@ -877,6 +908,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.boolean "CanRunCreditAndBackgroundCheck", default: false, null: false
     t.integer "SaTuRenterId"
     t.boolean "IsDeleted", default: false, null: false
+
     t.index ["User_Id"], name: "index_rental_applications_on_user_id"
   end
 
@@ -903,8 +935,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.decimal "HurricaneDeductible", precision: 18, scale: 2
     t.string "UserId"
     t.boolean "IsDeleted", default: false, null: false
-    t.index ["RentersInsuranceDocumentId"], name: "index_renters_insurances_on_document_id"
+
     t.index ["UserId"], name: "index_renters_insurances_on_user_id"
+    t.index ["RentersInsuranceDocumentId"], name: "index_renters_insurances_on_document_id"
   end
 
   create_table "sent_notifications", force: :cascade do |t|
@@ -913,54 +946,39 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "UserId"
     t.datetime "LastSentDate", null: false
     t.text "ExtraData"
+
     t.index ["UserId"], name: "index_sent_notifications_on_user_id"
   end
 
   create_table "service_charges", force: :cascade do |t|
-    t.string "type", null: false
+    t.string "type", null: false  # STI discriminator for SyndicationCharge
     t.datetime "ChargeDate"
     t.boolean "IsCharged", default: false, null: false
     t.decimal "Amount", precision: 18, scale: 2
-    t.integer "CompanyId"
-    t.datetime "StartAdvertiseProperty"
-    t.datetime "EndAdvertiseProperty"
-    t.datetime "StartChargePeriod"
-    t.datetime "EndChargePeriod"
-    t.integer "PropertyId"
-    t.integer "PaymentId"
-    t.index ["CompanyId"], name: "index_service_charges_on_company_id"
-    t.index ["PaymentId"], name: "index_service_charges_on_payment_id"
-    t.index ["PropertyId"], name: "index_service_charges_on_property_id"
-    t.index ["type"], name: "index_service_charges_on_type"
-  end
+    t.integer "CompanyId"  # For LandlordServiceCharge descendants
+    t.datetime "StartAdvertiseProperty"  # For SyndicationCharge
+    t.datetime "EndAdvertiseProperty"  # For SyndicationCharge
+    t.datetime "StartChargePeriod"  # For SyndicationCharge
+    t.datetime "EndChargePeriod"  # For SyndicationCharge
+    t.integer "PropertyId"  # For SyndicationCharge
+    t.integer "PaymentId"  # For SyndicationCharge
 
-  create_table "sessions", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.string "ip_address"
-    t.string "user_agent"
-    t.string "source"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_sessions_on_user_id"
+    t.index ["type"], name: "index_service_charges_on_type"
+    t.index ["CompanyId"], name: "index_service_charges_on_company_id"
+    t.index ["PropertyId"], name: "index_service_charges_on_property_id"
+    t.index ["PaymentId"], name: "index_service_charges_on_payment_id"
   end
 
   create_table "system_limit_tallies", force: :cascade do |t|
     t.integer "LimitType", null: false
     t.datetime "TimePeriodStart", null: false
     t.integer "Tally", default: 0, null: false
+
     t.index ["LimitType"], name: "index_system_limit_tallies_on_limit_type"
   end
 
-  create_table "system_limits", primary_key: "LimitType", id: :serial, force: :cascade do |t|
+  create_table "system_limits", primary_key: "LimitType", id: :integer, force: :cascade do |t|
     t.integer "Limit", null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email_address", null: false
-    t.string "password_digest", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   create_table "vehicles", force: :cascade do |t|
@@ -971,95 +989,139 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.string "PlateNo"
     t.string "State"
     t.integer "RentalApplicationId", null: false
+
     t.index ["RentalApplicationId"], name: "index_vehicles_on_rental_application_id"
   end
 
-  add_foreign_key "account_document_requests", "account_documents", column: "DocumentId"
-  add_foreign_key "account_document_requests", "asp_net_users", column: "RequestedById", primary_key: "Id"
+  # Foreign Key Constraints
+
   add_foreign_key "account_document_requests", "asp_net_users", column: "UserId", primary_key: "Id"
   add_foreign_key "account_document_requests", "landlord_companies", column: "CompanyId"
+  add_foreign_key "account_document_requests", "account_documents", column: "DocumentId"
+  add_foreign_key "account_document_requests", "asp_net_users", column: "RequestedById", primary_key: "Id"
+
   add_foreign_key "account_documents", "asp_net_users", column: "UserId", primary_key: "Id"
-  add_foreign_key "account_verification_histories", "asp_net_users", column: "EntryCreatedByUserId", primary_key: "Id"
+
   add_foreign_key "account_verification_histories", "asp_net_users", column: "UserId", primary_key: "Id"
+  add_foreign_key "account_verification_histories", "asp_net_users", column: "EntryCreatedByUserId", primary_key: "Id"
+
   add_foreign_key "application_group_members", "application_groups", column: "ApplicationGroupId"
   add_foreign_key "application_group_members", "asp_net_users", column: "UserId", primary_key: "Id"
-  add_foreign_key "application_group_members", "property_bid_authorizations", column: "PropertyBidAuthorizationId"
   add_foreign_key "application_group_members", "rental_applications", column: "ApplicationId"
-  add_foreign_key "application_groups", "lease_periods", column: "LeasePeriodId"
+  add_foreign_key "application_group_members", "property_bid_authorizations", column: "PropertyBidAuthorizationId"
+
   add_foreign_key "application_groups", "properties", column: "PropertyId"
-  add_foreign_key "application_reviews", "asp_net_users", column: "ReviewerId", primary_key: "Id"
+  add_foreign_key "application_groups", "lease_periods", column: "LeasePeriodId"
+
   add_foreign_key "application_reviews", "rental_applications", column: "ApplicationId"
-  add_foreign_key "auto_billing_payments", "asp_net_users", column: "CreatedByUserId", primary_key: "Id"
+  add_foreign_key "application_reviews", "asp_net_users", column: "ReviewerId", primary_key: "Id"
+
   add_foreign_key "auto_billing_payments", "lease_periods", column: "LeasePeriodId"
-  add_foreign_key "auto_billings", "asp_net_users", column: "LastModifiedById", primary_key: "Id"
+  add_foreign_key "auto_billing_payments", "asp_net_users", column: "CreatedByUserId", primary_key: "Id"
+
   add_foreign_key "auto_billings", "lease_periods", column: "LeasePeriodId"
+  add_foreign_key "auto_billings", "asp_net_users", column: "LastModifiedById", primary_key: "Id"
+
+  add_foreign_key "bids", "properties", column: "PropertyId"
   add_foreign_key "bids", "asp_net_users", column: "BidOwnerId", primary_key: "Id"
   add_foreign_key "bids", "lease_periods", column: "LeasePeriodId"
-  add_foreign_key "bids", "properties", column: "PropertyId"
+
   add_foreign_key "billing_payment_histories", "billing_payments", column: "BillingPaymentId"
-  add_foreign_key "billing_payment_nsf_charges", "billing_payments", column: "BillingPaymentNSFChargeId"
-  add_foreign_key "billing_payment_nsf_charges", "billing_payments", column: "BillingPaymentThatNSFdId"
+
+  add_foreign_key "billing_payment_nsf_charges", "billing_payments", column: "BillingPaymentThatNSFdId", primary_key: "Id"
+  add_foreign_key "billing_payment_nsf_charges", "billing_payments", column: "BillingPaymentNSFChargeId", primary_key: "Id"
+
+  add_foreign_key "billing_payments", "lease_periods", column: "LeasePeriodId"
   add_foreign_key "billing_payments", "asp_net_users", column: "PaidByUserId", primary_key: "Id"
   add_foreign_key "billing_payments", "auto_billing_payments", column: "AutoBillingPaymentId"
-  add_foreign_key "billing_payments", "billing_payments", column: "SystemFeeForBillingPaymentId"
-  add_foreign_key "billing_payments", "lease_periods", column: "LeasePeriodId"
-  add_foreign_key "billing_references", "billings", column: "ChildBillingId"
-  add_foreign_key "billing_references", "billings", column: "ParentBillingId"
-  add_foreign_key "billings", "asp_net_users", column: "LastModifiedById", primary_key: "Id"
+  add_foreign_key "billing_payments", "billing_payments", column: "SystemFeeForBillingPaymentId", primary_key: "Id"
+
+  add_foreign_key "billing_references", "billings", column: "ParentBillingId", primary_key: "Id"
+  add_foreign_key "billing_references", "billings", column: "ChildBillingId", primary_key: "Id"
+
   add_foreign_key "billings", "auto_billings", column: "AutoBillingId"
   add_foreign_key "billings", "lease_periods", column: "LeasePeriodId"
+  add_foreign_key "billings", "asp_net_users", column: "LastModifiedById", primary_key: "Id"
+
   add_foreign_key "cc_payment_methods", "asp_net_users", column: "CreatedByUserId", primary_key: "Id"
   add_foreign_key "cc_payment_methods", "landlord_companies", column: "CompanyId"
+
   add_foreign_key "customer_accounts", "asp_net_users", column: "UserId", primary_key: "Id"
+
   add_foreign_key "employment_records", "rental_applications", column: "RentalApplicationId"
+
   add_foreign_key "incomes", "rental_applications", column: "RentalApplicationId"
+
   add_foreign_key "landlord_companies", "asp_net_users", column: "CreatedByUserId", primary_key: "Id"
-  add_foreign_key "landlord_company_permissions", "asp_net_users", column: "UserId", primary_key: "Id"
+
   add_foreign_key "landlord_company_permissions", "landlord_companies", column: "LandlordCompanyId"
+  add_foreign_key "landlord_company_permissions", "asp_net_users", column: "UserId", primary_key: "Id"
+
   add_foreign_key "landlord_event_records", "asp_net_users", column: "UserId", primary_key: "Id"
-  add_foreign_key "leads", "asp_net_users", column: "UserId", primary_key: "Id"
+
   add_foreign_key "leads", "properties", column: "PropertyId"
+  add_foreign_key "leads", "asp_net_users", column: "UserId", primary_key: "Id"
+
   add_foreign_key "lease_periods", "properties", column: "PropertyId"
-  add_foreign_key "lease_tenants", "asp_net_users", column: "UserId", primary_key: "Id"
+
   add_foreign_key "lease_tenants", "lease_periods", column: "LeasePeriodId"
+  add_foreign_key "lease_tenants", "asp_net_users", column: "UserId", primary_key: "Id"
   add_foreign_key "lease_tenants", "property_bid_authorizations", column: "PropertyBidAuthorizationId"
   add_foreign_key "lease_tenants", "renters_insurances", column: "RentersInsuranceId"
+
   add_foreign_key "maintenance_request_photos", "maintenance_requests", column: "MaintenanceRequestId"
-  add_foreign_key "maintenance_requests", "asp_net_users", column: "CreatedByUserId", primary_key: "Id"
+
   add_foreign_key "maintenance_requests", "lease_periods", column: "LeasePeriodId"
+  add_foreign_key "maintenance_requests", "asp_net_users", column: "CreatedByUserId", primary_key: "Id"
+
   add_foreign_key "merchant_locations", "landlord_companies", column: "CompanyId"
-  add_foreign_key "omni_auth_identities", "users"
-  add_foreign_key "payments", "asp_net_users", column: "PaidByUserId", primary_key: "Id"
+
   add_foreign_key "payments", "rental_applications", column: "RentalApplicationId"
-  add_foreign_key "phone_numbers", "personal_contact_of_renters", column: "PersonalContactOfRenterId"
+  add_foreign_key "payments", "asp_net_users", column: "PaidByUserId", primary_key: "Id"
+
   add_foreign_key "phone_numbers", "rental_applications", column: "RentalApplicationId"
-  add_foreign_key "properties", "asp_net_users", column: "OwnerId", primary_key: "Id"
+  add_foreign_key "phone_numbers", "personal_contact_of_renters", column: "PersonalContactOfRenterId"
+
   add_foreign_key "properties", "landlord_companies", column: "CompanyId"
+  add_foreign_key "properties", "asp_net_users", column: "OwnerId", primary_key: "Id"
   add_foreign_key "properties", "lease_periods", column: "CurrentLeasePeriodId"
-  add_foreign_key "properties", "merchant_locations", column: "MerchantLocationId"
   add_foreign_key "properties", "property_groups", column: "PropertyGroupId"
-  add_foreign_key "property_bid_authorizations", "application_groups", column: "ApplicationGroupId"
-  add_foreign_key "property_bid_authorizations", "asp_net_users", column: "PrimaryRenterId", primary_key: "Id"
-  add_foreign_key "property_bid_authorizations", "lease_periods", column: "LeasePeriodId"
+  add_foreign_key "properties", "merchant_locations", column: "MerchantLocationId"
+
   add_foreign_key "property_bid_authorizations", "properties", column: "PropertyId"
+  add_foreign_key "property_bid_authorizations", "asp_net_users", column: "PrimaryRenterId", primary_key: "Id"
   add_foreign_key "property_bid_authorizations", "rental_applications", column: "PrimaryApplicationId"
+  add_foreign_key "property_bid_authorizations", "lease_periods", column: "LeasePeriodId"
+  add_foreign_key "property_bid_authorizations", "application_groups", column: "ApplicationGroupId"
+
   add_foreign_key "property_listing_tags", "properties", column: "PropertyId"
+
   add_foreign_key "property_note_appliances", "property_notes", column: "PropertyNoteId"
+
   add_foreign_key "property_notes", "properties", column: "PropertyId"
+
   add_foreign_key "property_photos", "properties", column: "PropertyId"
+
   add_foreign_key "ps_application_entities", "asp_net_users", column: "SubmittedByUserId", primary_key: "Id"
   add_foreign_key "ps_application_entities", "landlord_companies", column: "SubmittingUsersCompanyId"
-  add_foreign_key "ps_batch_transactions", "lease_periods", column: "LeasePeriodId"
-  add_foreign_key "ps_batch_transactions", "properties", column: "PropertyId"
+
   add_foreign_key "ps_batch_transactions", "ps_batches", column: "BatchId", primary_key: "BatchId"
+  add_foreign_key "ps_batch_transactions", "properties", column: "PropertyId"
+  add_foreign_key "ps_batch_transactions", "lease_periods", column: "LeasePeriodId"
+
   add_foreign_key "ps_batches", "landlord_companies", column: "CompanyId"
+
   add_foreign_key "rental_addresses", "rental_applications", column: "RentalApplicationId"
+
   add_foreign_key "rental_applications", "asp_net_users", column: "User_Id", primary_key: "Id"
-  add_foreign_key "renters_insurances", "account_documents", column: "RentersInsuranceDocumentId"
+
   add_foreign_key "renters_insurances", "asp_net_users", column: "UserId", primary_key: "Id"
+  add_foreign_key "renters_insurances", "account_documents", column: "RentersInsuranceDocumentId"
+
   add_foreign_key "service_charges", "landlord_companies", column: "CompanyId"
-  add_foreign_key "service_charges", "payments", column: "PaymentId"
   add_foreign_key "service_charges", "properties", column: "PropertyId"
-  add_foreign_key "sessions", "users"
+  add_foreign_key "service_charges", "payments", column: "PaymentId"
+
   add_foreign_key "vehicles", "rental_applications", column: "RentalApplicationId"
+
 end
