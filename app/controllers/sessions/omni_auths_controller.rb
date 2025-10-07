@@ -6,7 +6,7 @@ class Sessions::OmniAuthsController < ApplicationController
     auth = request.env["omniauth.auth"]
     uid = auth["uid"]
     provider = auth["provider"]
-    redirect_path = request.env["omniauth.params"]&.dig("origin") || root_path
+    redirect_path = request.env["omniauth.params"]&.dig("origin") || dashboards_index_url
 
     identity = OmniAuthIdentity.find_by(uid: uid, provider: provider)
     if authenticated?

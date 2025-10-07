@@ -40,6 +40,7 @@ node_modules/
 /app/assets/builds/*
 !/app/assets/builds/.gitkeep
 
-
 # custom
-*.DS-Store
+.DS-Store
+/app/assets/builds/*
+!/app/assets/builds/.keep

@@ -288,7 +288,7 @@ resource "aws_apprunner_service" "main" {
         }
 
         runtime_environment_secrets = {
-          SECRET_KEY_BASE      = "${aws_secretsmanager_secret.rails_master_key.arn}:secret_key_base::"
+          SECRET_KEY_BASE      = aws_secretsmanager_secret.rails_master_key.arn
           GOOGLE_CLIENT_ID     = "${aws_secretsmanager_secret.oauth_credentials.arn}:google_client_id::"
           GOOGLE_CLIENT_SECRET = "${aws_secretsmanager_secret.oauth_credentials.arn}:google_client_secret::"
           GITHUB_CLIENT_ID     = "${aws_secretsmanager_secret.oauth_credentials.arn}:github_client_id::"

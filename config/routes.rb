@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "dashboards/index"
   resource :session
   resources :passwords, param: :token
   get "/auth/:provider/callback" => "sessions/omni_auths#create", as: :omniauth_callback
