@@ -44,3 +44,5 @@ node_modules/
 .DS-Store
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+/config/credentials/production.key
