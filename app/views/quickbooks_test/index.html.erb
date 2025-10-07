@@ -1,0 +1,83 @@
+<div class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto">
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">QuickBooks API Test</h1>
+        <p class="text-gray-600">Test your QuickBooks API integration</p>
+      </div>
+
+      <% if session[:qb_access_token].present? %>
+        <!-- Connected State -->
+        <div class="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
+          <div class="flex items-center mb-4">
+            <svg class="h-6 w-6 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h2 class="text-lg font-semibold text-green-900">Connected to QuickBooks</h2>
+          </div>
+          <p class="text-green-700 text-sm mb-4">
+            Realm ID: <span class="font-mono"><%= session[:qb_realm_id] %></span>
+          </p>
+          <div class="flex gap-3">
+            <%= button_to "Test API Call",
+                quickbooks_test_test_api_path,
+                method: :post,
+                class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out",
+                data: { turbo_frame: "api_results" } %>
+
+            <%= button_to "Disconnect",
+                quickbooks_test_disconnect_path,
+                method: :delete,
+                class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out",
+                data: { confirm: "Are you sure you want to disconnect?" } %>
+          </div>
+        </div>
+
+        <!-- API Results Frame -->
+        <turbo-frame id="api_results">
+          <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">API Response</h3>
+            <p class="text-gray-600 text-sm">Click "Test API Call" to fetch data from QuickBooks</p>
+          </div>
+        </turbo-frame>
+
+      <% else %>
+        <!-- Disconnected State -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <h2 class="text-lg font-semibold text-blue-900 mb-2">Connect to QuickBooks</h2>
+          <p class="text-blue-700 text-sm mb-4">
+            Click the button below to authorize this application to access your QuickBooks data.
+          </p>
+          <%= link_to quickbooks_test_connect_path,
+              class: "inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-150 ease-in-out" do %>
+            <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            Connect to QuickBooks
+          <% end %>
+        </div>
+
+        <!-- Instructions -->
+        <div class="bg-gray-50 rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-3">Setup Instructions</h3>
+          <ol class="list-decimal list-inside space-y-2 text-gray-700 text-sm">
+            <li>Make sure your QuickBooks app credentials are set in the <code class="bg-gray-200 px-2 py-1 rounded">.env</code> file</li>
+            <li>Add <code class="bg-gray-200 px-2 py-1 rounded">http://localhost:3000/quickbooks_test/callback</code> to your QuickBooks app's Redirect URIs</li>
+            <li>Click the "Connect to QuickBooks" button above</li>
+            <li>Authorize the app in QuickBooks</li>
+            <li>You'll be redirected back to test the API</li>
+          </ol>
+        </div>
+      <% end %>
+
+      <!-- Environment Info -->
+      <div class="mt-6 pt-6 border-t border-gray-200">
+        <h3 class="text-sm font-semibold text-gray-700 mb-2">Environment</h3>
+        <div class="text-sm text-gray-600">
+          <p>Mode: <span class="font-mono"><%= ENV['QUICKBOOKS_USE_SANDBOX'] == 'true' ? 'Sandbox' : 'Production' %></span></p>
+          <p>Client ID: <span class="font-mono"><%= ENV['QUICKBOOKS_CLIENT_ID']&.first(10) %>...</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -47,6 +47,8 @@ gem "omniauth", "~> 2.1", ">= 2.1.2"
 gem "omniauth-rails_csrf_protection", "~> 1.0", ">= 1.0.2"
 gem "omniauth-google-oauth2", "~> 1.2"
 gem "omniauth-github", "~> 2.0.0"
+gem "oauth2", "~> 2.0"
+gem "intuit-oauth"
 
 # QR code generation
 gem "rqrcode", "~> 2.0"
@@ -63,6 +65,9 @@ group :development, :test do
 
   # Testing framework [https://rspec.info/]
   gem "rspec-rails", "~> 6.1.0"
+
+  # Load environment variables from .env file
+  gem "dotenv-rails"
 end
 
 group :development do
@@ -74,6 +79,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "webmock"
 end
 
 gem "tailwindcss-rails", "~> 4.3"

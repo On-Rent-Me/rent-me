@@ -8,6 +8,13 @@ Rails.application.routes.draw do
   # post "/auth/:provider/callback" => "sessions/omni_auths#create" # FIXME: Only needed for callbacks doing POST requests
   get "/auth/failure" => "sessions/omni_auths#failure", as: :omniauth_failure
 
+  # QuickBooks test routes
+  get "quickbooks_test/index"
+  get "quickbooks_test/connect"
+  get "quickbooks_test/callback"
+  post "quickbooks_test/test_api"
+  delete "quickbooks_test/disconnect"
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

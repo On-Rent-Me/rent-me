@@ -1,0 +1,14 @@
+<turbo-frame id="api_results">
+  <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+    <div class="flex items-center mb-4">
+      <svg class="h-5 w-5 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+      <h3 class="text-lg font-semibold text-red-900">API Call Failed</h3>
+    </div>
+    <p class="text-red-700 text-sm font-mono"><%= @error %></p>
+    <p class="text-red-600 text-xs mt-2">
+      Try disconnecting and reconnecting to refresh your access token.
+    </p>
+  </div>
+</turbo-frame>
