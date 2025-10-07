@@ -166,3 +166,24 @@ variable "custom_domain" {
   type        = string
   default     = ""
 }
+
+# QuickBooks Configuration
+variable "quickbooks_client_id" {
+  description = "QuickBooks OAuth client ID"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "quickbooks_client_secret" {
+  description = "QuickBooks OAuth client secret"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "quickbooks_use_sandbox" {
+  description = "Whether to use QuickBooks sandbox environment"
+  type        = bool
+  default     = false
+}

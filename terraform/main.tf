@@ -228,10 +228,12 @@ resource "aws_secretsmanager_secret" "oauth_credentials" {
 resource "aws_secretsmanager_secret_version" "oauth_credentials" {
   secret_id = aws_secretsmanager_secret.oauth_credentials.id
   secret_string = jsonencode({
-    google_client_id     = var.google_oauth_client_id
-    google_client_secret = var.google_oauth_client_secret
-    github_client_id     = var.github_oauth_client_id
-    github_client_secret = var.github_oauth_client_secret
+    google_client_id      = var.google_oauth_client_id
+    google_client_secret  = var.google_oauth_client_secret
+    github_client_id      = var.github_oauth_client_id
+    github_client_secret  = var.github_oauth_client_secret
+    quickbooks_client_id     = var.quickbooks_client_id
+    quickbooks_client_secret = var.quickbooks_client_secret
   })
 }
 
@@ -278,21 +280,24 @@ resource "aws_apprunner_service" "main" {
         port = "8080"
 
         runtime_environment_variables = {
-          RAILS_ENV              = "production"
-          RAILS_LOG_TO_STDOUT    = "true"
+          RAILS_ENV                = "production"
+          RAILS_LOG_TO_STDOUT      = "true"
           RAILS_SERVE_STATIC_FILES = "true"
-          DATABASE_URL           = "postgresql://${var.database_username}:${var.database_password}@${aws_db_instance.main.endpoint}/${var.database_name}"
-          POSTGRES_HOST          = aws_db_instance.main.address
-          POSTGRES_USER          = var.database_username
-          POSTGRES_PASSWORD      = var.database_password
+          DATABASE_URL             = "postgresql://${var.database_username}:${var.database_password}@${aws_db_instance.main.endpoint}/${var.database_name}"
+          POSTGRES_HOST            = aws_db_instance.main.address
+          POSTGRES_USER            = var.database_username
+          POSTGRES_PASSWORD        = var.database_password
+          QUICKBOOKS_USE_SANDBOX   = tostring(var.quickbooks_use_sandbox)
         }
 
         runtime_environment_secrets = {
-          SECRET_KEY_BASE      = aws_secretsmanager_secret.rails_master_key.arn
-          GOOGLE_CLIENT_ID     = "${aws_secretsmanager_secret.oauth_credentials.arn}:google_client_id::"
-          GOOGLE_CLIENT_SECRET = "${aws_secretsmanager_secret.oauth_credentials.arn}:google_client_secret::"
-          GITHUB_CLIENT_ID     = "${aws_secretsmanager_secret.oauth_credentials.arn}:github_client_id::"
-          GITHUB_CLIENT_SECRET = "${aws_secretsmanager_secret.oauth_credentials.arn}:github_client_secret::"
+          SECRET_KEY_BASE          = aws_secretsmanager_secret.rails_master_key.arn
+          GOOGLE_CLIENT_ID         = "${aws_secretsmanager_secret.oauth_credentials.arn}:google_client_id::"
+          GOOGLE_CLIENT_SECRET     = "${aws_secretsmanager_secret.oauth_credentials.arn}:google_client_secret::"
+          GITHUB_CLIENT_ID         = "${aws_secretsmanager_secret.oauth_credentials.arn}:github_client_id::"
+          GITHUB_CLIENT_SECRET     = "${aws_secretsmanager_secret.oauth_credentials.arn}:github_client_secret::"
+          QUICKBOOKS_CLIENT_ID     = "${aws_secretsmanager_secret.oauth_credentials.arn}:quickbooks_client_id::"
+          QUICKBOOKS_CLIENT_SECRET = "${aws_secretsmanager_secret.oauth_credentials.arn}:quickbooks_client_secret::"
         }
       }
     }
