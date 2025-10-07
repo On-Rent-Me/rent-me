@@ -39,3 +39,7 @@ node_modules/
 # Ignore built assets
 /app/assets/builds/*
 !/app/assets/builds/.gitkeep
+
+
+# custom
+*.DS-Store

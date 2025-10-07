@@ -1,0 +1,37 @@
+# AWS Configuration
+aws_region  = "us-east-1"
+app_name    = "rent-me"
+environment = "production"
+
+# Network Configuration
+vpc_id                = "vpc-xxxxxxxxxxxxxxxxx"
+database_subnet_ids   = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-yyyyyyyyyyyyyyyyy"]
+apprunner_subnet_ids  = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-yyyyyyyyyyyyyyyyy"]
+
+# Database Configuration
+postgres_version            = "16.6"
+db_instance_class           = "db.t4g.micro"
+db_allocated_storage        = 20
+db_max_allocated_storage    = 100
+db_backup_retention_period  = 7
+database_name               = "rent_me_production"
+database_username           = "rent_me_admin"
+database_password           = "CHANGE_ME_STRONG_PASSWORD"
+
+# App Runner Configuration
+apprunner_cpu       = "1024"
+apprunner_memory    = "2048"
+max_concurrency     = 100
+min_instances       = 1
+max_instances       = 10
+auto_deploy_enabled = false
+image_tag           = "latest"
+
+# Rails Configuration
+rails_master_key = "your_rails_master_key_here"
+
+# OAuth Configuration (optional)
+google_oauth_client_id     = ""
+google_oauth_client_secret = ""
+github_oauth_client_id     = ""
+github_oauth_client_secret = ""
