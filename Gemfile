@@ -51,7 +51,7 @@ gem "oauth2", "~> 2.0"
 gem "intuit-oauth"
 
 # QR code generation
-gem "rqrcode", "~> 2.0"
+gem "rqrcode", "~> 3.1"
 
 # Friendly IDs for pretty URLs
 gem "friendly_id", "~> 5.5.0"
