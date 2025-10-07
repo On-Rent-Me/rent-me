@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :user_integrations
   resources :user_codes, only: [:index, :new, :create, :show]
   get "dashboards/index"
   resource :session

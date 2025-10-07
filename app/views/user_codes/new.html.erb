@@ -1,11 +1,15 @@
-<div class="max-w-2xl mx-auto p-6">
-  <h1 class="text-3xl font-bold mb-6">Generate QR Code</h1>
+<div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3 dark:border-white/10">
+  <div>
+    <h2 class="text-base/7 font-semibold text-gray-900 dark:text-white">Generate QR Code</h2>
+    <p class="mt-1 text-sm/6 text-gray-600 dark:text-gray-400">Click the button to generate a new QR code for the main URL</p>
+  </div>
 
-  <div class="bg-white shadow-md rounded-lg p-6">
-    <p class="mb-4 text-gray-700">Click the button below to generate a new QR code for the main URL.</p>
+  <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+    <div class="sm:col-span-4">
+      <%= form_with url: user_codes_path, method: :post, class: "space-y-4" do |form| %>
+        <%= form.submit "Generate QR Code", class: "bg-green-500 hover:bg-rentme-green-secondary text-white font-bold py-3 px-6 rounded-lg cursor-pointer transition-colors" %>
+      <% end %>
 
-    <%= form_with url: user_codes_path, method: :post, class: "space-y-4" do |form| %>
-      <%= form.submit "Generate QR Code", class: "bg-rentme-green hover:bg-rentme-green-secondary text-white font-bold py-3 px-6 rounded-lg cursor-pointer transition-colors" %>
-    <% end %>
+    </div>
   </div>
 </div>
