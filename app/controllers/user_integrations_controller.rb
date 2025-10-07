@@ -41,7 +41,7 @@ class UserIntegrationsController < ApplicationController
   private
 
   def set_user_integration
-    @user_integration = Current.user.user_integrations.find(params[:id])
+    @user_integration = Current.user.user_integrations.friendly.find(params[:id])
   end
 
   def user_integration_params

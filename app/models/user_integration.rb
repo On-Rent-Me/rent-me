@@ -1,4 +1,7 @@
 class UserIntegration < ApplicationRecord
+  extend FriendlyId
+  friendly_id :integration_name, use: [:slugged, :history]
+
   belongs_to :user
 
   validates :integration_type, presence: true
@@ -13,5 +16,15 @@ class UserIntegration < ApplicationRecord
 
   def needs_refresh?
     expired? && refresh_token.present?
+  end
+
+  # Method to generate slug from integration name
+  def integration_name
+    "#{integration_type}-#{user_id}"
+  end
+
+  # Override should_generate_new_friendly_id? to regenerate slug when integration_type changes
+  def should_generate_new_friendly_id?
+    integration_type_changed? || super
   end
 end
