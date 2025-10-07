@@ -30,9 +30,11 @@ ENV BUNDLE_PATH=/app/vendor/bundle \
     BUNDLE_APP_CONFIG=/app/vendor/bundle \
     BUNDLE_BIN=/app/vendor/bundle/bin
 
-# Set the command to run your application.
-# For example, a basic Rack app with Puma on port 8080.
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+# Precompile assets for production
+RUN bundle exec rails assets:precompile
+
+# Set the command to run your application with database setup
+CMD ["sh", "-c", "bundle exec rails db:prepare && bundle exec puma -C config/puma.rb"]
 
 # Expose the port your application listens on
 EXPOSE 8080
