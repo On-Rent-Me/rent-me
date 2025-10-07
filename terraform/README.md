@@ -163,16 +163,44 @@ Edit `terraform.tfvars` to adjust:
 
 ## Custom Domain
 
-To use a custom domain:
+To use a custom domain (e.g., rentme.studio):
 
-1. Create a certificate in AWS Certificate Manager
-2. Add custom domain to App Runner:
+### Method 1: Using Terraform (Recommended)
+
+1. Add your domain to `terraform.tfvars`:
+   ```hcl
+   custom_domain = "rentme.studio"
+   ```
+
+2. Apply the configuration:
+   ```bash
+   terraform apply
+   ```
+
+3. Get DNS validation records:
+   ```bash
+   terraform output custom_domain_validation_records
+   ```
+
+4. Add the CNAME validation records to your DNS provider (where you bought rentme.studio)
+
+5. Wait for validation (can take 5-60 minutes). Check status:
+   ```bash
+   terraform output custom_domain_status
+   ```
+
+### Method 2: Using AWS CLI
+
+1. Add custom domain to App Runner:
    ```bash
    aws apprunner associate-custom-domain \
      --service-arn $(terraform output -raw apprunner_service_arn) \
-     --domain-name yourdomain.com
+     --domain-name rentme.studio
    ```
-3. Update DNS records as instructed
+
+2. Update DNS records as instructed by AWS
+
+**Note**: App Runner automatically provisions and manages SSL certificates for custom domains.
 
 ## Monitoring
 

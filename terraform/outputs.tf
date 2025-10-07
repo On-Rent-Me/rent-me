@@ -51,3 +51,19 @@ output "oauth_credentials_secret_arn" {
   value       = aws_secretsmanager_secret.oauth_credentials.arn
   sensitive   = true
 }
+
+output "custom_domain_validation_records" {
+  description = "DNS validation records for custom domain - add these to your DNS provider"
+  value = var.custom_domain != "" ? {
+    for record in aws_apprunner_custom_domain_association.main[0].certificate_validation_records :
+    record.name => {
+      type  = record.type
+      value = record.value
+    }
+  } : {}
+}
+
+output "custom_domain_status" {
+  description = "Status of the custom domain association"
+  value       = var.custom_domain != "" ? aws_apprunner_custom_domain_association.main[0].status : "No custom domain configured"
+}

@@ -1,0 +1,25 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Your QR Codes</h1>
+    <%= link_to "Generate New QR Code", new_user_code_path, class: "bg-rentme-green hover:bg-rentme-green-secondary text-white font-bold py-2 px-4 rounded" %>
+  </div>
+
+  <% if @user_codes.any? %>
+    <div class="grid gap-4">
+      <% @user_codes.each do |user_code| %>
+        <div class="bg-white shadow-md rounded-lg p-6 flex items-center justify-between">
+          <div class="flex-1">
+            <p class="font-semibold text-lg mb-2"><%= user_code.url %></p>
+            <p class="text-sm text-gray-600">Created: <%= user_code.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+          </div>
+          <%= link_to "View QR Code", user_code_path(user_code), class: "bg-rentme-blue hover:bg-rentme-blue-secondary text-white font-bold py-2 px-4 rounded" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-gray-100 rounded-lg p-8 text-center">
+      <p class="text-gray-600 mb-4">You haven't generated any QR codes yet.</p>
+      <%= link_to "Generate Your First QR Code", new_user_code_path, class: "bg-rentme-green hover:bg-rentme-green-secondary text-white font-bold py-2 px-4 rounded inline-block" %>
+    </div>
+  <% end %>
+</div>

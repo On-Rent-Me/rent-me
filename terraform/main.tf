@@ -347,3 +347,11 @@ resource "aws_apprunner_auto_scaling_configuration_version" "main" {
     Environment = var.environment
   }
 }
+
+# Custom Domain Configuration
+resource "aws_apprunner_custom_domain_association" "main" {
+  count = var.custom_domain != "" ? 1 : 0
+
+  domain_name = var.custom_domain
+  service_arn = aws_apprunner_service.main.arn
+}

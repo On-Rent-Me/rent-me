@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_07_062613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -955,6 +955,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
     t.integer "Limit", null: false
   end
 
+  create_table "user_codes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "qr_code_data"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_codes_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -1061,5 +1070,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_060528) do
   add_foreign_key "service_charges", "payments", column: "PaymentId"
   add_foreign_key "service_charges", "properties", column: "PropertyId"
   add_foreign_key "sessions", "users"
+  add_foreign_key "user_codes", "users"
   add_foreign_key "vehicles", "rental_applications", column: "RentalApplicationId"
 end

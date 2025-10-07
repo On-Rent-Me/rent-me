@@ -159,3 +159,10 @@ variable "github_oauth_client_secret" {
   sensitive   = true
   default     = ""
 }
+
+# Custom Domain Configuration
+variable "custom_domain" {
+  description = "Custom domain name for the application (e.g., rentme.studio)"
+  type        = string
+  default     = ""
+}

@@ -1,6 +1,11 @@
 # Stage 1: Build dependencies
 FROM ruby:3.4.6 as build
 
+# Install build dependencies
+RUN apt-get update -qq && \
+    apt-get install -y build-essential libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
+
 # Install bundler
 RUN gem install bundler
 
@@ -10,11 +15,19 @@ WORKDIR /app
 # Copy the Gemfile and Gemfile.lock to leverage Docker cache
 COPY Gemfile Gemfile.lock ./
 
+# Configure bundler to use precompiled gems
+RUN bundle config set --local force_ruby_platform false
+
 # Install gems into a vendor directory
 RUN bundle install --path vendor/bundle
 
 # Stage 2: Production image
 FROM ruby:3.4.6-slim
+
+# Install runtime dependencies
+RUN apt-get update -qq && \
+    apt-get install -y libpq5 && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the working directory inside the container
 WORKDIR /app

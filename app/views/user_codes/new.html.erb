@@ -1,0 +1,11 @@
+<div class="max-w-2xl mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6">Generate QR Code</h1>
+
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <p class="mb-4 text-gray-700">Click the button below to generate a new QR code for the main URL.</p>
+
+    <%= form_with url: user_codes_path, method: :post, class: "space-y-4" do |form| %>
+      <%= form.submit "Generate QR Code", class: "bg-rentme-green hover:bg-rentme-green-secondary text-white font-bold py-3 px-6 rounded-lg cursor-pointer transition-colors" %>
+    <% end %>
+  </div>
+</div>
